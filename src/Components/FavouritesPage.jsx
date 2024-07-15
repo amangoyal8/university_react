@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { handleGetApi } from '../Utilities/Utils';
+import { handleDeleteApi, handleGetApi } from '../Utilities/Utils';
 
 function FavoritesPage() {
   const [favorites, setFavorites] = useState([]);
@@ -16,6 +16,16 @@ function FavoritesPage() {
 
     fetchFavorites();
   }, []);
+  const handleRemove = async (id) => {
+    const response = handleDeleteApi(`http://localhost:4000/api/delfav/${id}`);
+    response.then(function (result) {
+      if (result) {
+        console.log(result.data);
+        setFavorites(favorites.filter(fav => fav.id !== id));
+      }
+    })
+  };
+
 
   return (
     <div>
@@ -37,6 +47,9 @@ function FavoritesPage() {
                 <a href={university.web_page} target="_blank" rel="noopener noreferrer">
                   {university.web_page}
                 </a>
+              </td>
+              <td>
+                <button className="btn btn-danger" onClick={() => handleRemove(university.id)}>Remove</button>
               </td>
             </tr>
           ))}

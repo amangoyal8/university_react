@@ -19,3 +19,13 @@ export const handlePostApi = async (url, data) => {
     throw error;
   }
 };
+
+export const handleDeleteApi = async (url) => {
+  try {
+    const response = await axios.delete(url);
+    return response;
+  } catch (error) {
+    console.error('Error deleting data:', error);
+    throw error;
+  }
+};
